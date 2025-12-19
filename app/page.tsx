@@ -32,7 +32,7 @@ export default function Home() {
           playsInline 
           className="absolute h-full w-full object-cover z-0"
         >
-          <source src="/media/a.mp4" type="video/mp4" />
+          <source src="a.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="relative z-20 max-w-7xl mx-auto px-6 text-left text-white">
