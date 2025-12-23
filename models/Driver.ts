@@ -37,6 +37,8 @@ export interface IDriver extends Document {
   city?: string;
   state?: string;
   yearsOfExperience?: string;
+  // Active status
+  active?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -124,6 +126,8 @@ const DriverSchema = new Schema<IDriver>(
     city: { type: String, trim: true },
     state: { type: String, trim: true },
     yearsOfExperience: { type: String, trim: true },
+    // Active status
+    active: { type: Boolean, default: false },
   },
   {
     timestamps: true,

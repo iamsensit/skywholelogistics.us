@@ -21,38 +21,14 @@ export async function GET() {
     
     const drivers = await Driver.find({ userId }).sort({ createdAt: -1 });
     
-    const driversData = drivers.map(driver => ({
-      id: driver._id.toString(),
-      name: driver.name,
-      mcNo: driver.mcNo,
-      phone: driver.phone,
-      truckType: driver.truckType,
-      dimensions: driver.dimensions,
-      equipment: driver.equipment,
-      haulType: driver.haulType,
-      setupCompanies: driver.setupCompanies,
-      specialEquipment: driver.specialEquipment,
-      rpm: driver.rpm,
-      zipCode: driver.zipCode,
-      percentage: driver.percentage,
-      cdlNumber: driver.cdlNumber,
-      cdlExpiration: driver.cdlExpiration,
-      cdlState: driver.cdlState,
-      licenseNumber: driver.licenseNumber,
-      licenseExpiration: driver.licenseExpiration,
-      licenseState: driver.licenseState,
-      insuranceProvider: driver.insuranceProvider,
-      insurancePolicyNumber: driver.insurancePolicyNumber,
-      insuranceExpiration: driver.insuranceExpiration,
-      insuranceCoverage: driver.insuranceCoverage,
-      email: driver.email,
-      address: driver.address,
-      city: driver.city,
-      state: driver.state,
-      yearsOfExperience: driver.yearsOfExperience,
-      createdAt: driver.createdAt,
-      updatedAt: driver.updatedAt,
-    }));
+    const driversData = drivers.map(driver => {
+      const driverObj = driver.toObject();
+      return {
+        id: driver._id.toString(),
+        ...driverObj,
+        active: Boolean(driver.active),
+      };
+    });
 
     return NextResponse.json(driversData);
   } catch (error: any) {
@@ -128,6 +104,7 @@ export async function POST(request: NextRequest) {
         city: data.city,
         state: data.state,
         yearsOfExperience: data.yearsOfExperience,
+        active: data.active !== undefined ? Boolean(data.active) : driver.active,
       });
 
       await driver.save();

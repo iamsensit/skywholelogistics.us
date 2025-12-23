@@ -136,12 +136,23 @@ function DriverFormContent() {
         } catch (error) {
           console.error('Error loading driver:', error);
         }
+      } else if (!editId && status === 'authenticated') {
+        // Pre-fill from URL params if creating new driver
+        const nameParam = searchParams.get('name');
+        const mcNoParam = searchParams.get('mcNo');
+        if (nameParam || mcNoParam) {
+          setFormData(prev => ({
+            ...prev,
+            name: nameParam || prev.name,
+            mcNo: mcNoParam || prev.mcNo,
+          }));
+        }
       }
     };
     if (status === 'authenticated') {
       loadDriver();
     }
-  }, [editId, status]);
+  }, [editId, status, searchParams]);
 
   if (status === 'loading') {
     return (

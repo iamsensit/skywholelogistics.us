@@ -50,7 +50,8 @@ export default function Navigation() {
   const isDashboardPage = pathname?.startsWith('/drivers') || 
                          pathname?.startsWith('/driver-form') ||
                          pathname?.startsWith('/loads') ||
-                         pathname?.startsWith('/load-form');
+                         pathname?.startsWith('/load-form') ||
+                         pathname?.startsWith('/active-drivers');
 
   // Show public navigation if not authenticated OR not on dashboard pages
   if (!isAuthenticated || !isDashboardPage) {
@@ -180,6 +181,16 @@ export default function Navigation() {
                       <TruckIcon className="h-4 w-4" />
                       Loads
                     </Link>
+                    <Link
+                      href="/active-drivers"
+                      onClick={() => setDropdownOpen(false)}
+                      className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50 cursor-pointer ${
+                        pathname === '/active-drivers' ? 'text-emerald-600 bg-emerald-50' : 'text-gray-700'
+                      }`}
+                    >
+                      <UserIcon className="h-4 w-4" />
+                      Active Drivers
+                    </Link>
                     <div className="border-t border-gray-200 my-1"></div>
                     <Link
                       href="/driver-form"
@@ -248,6 +259,14 @@ export default function Navigation() {
             >
               <TruckIcon className="h-4 w-4" />
               Loads
+            </Link>
+            <Link
+              href="/active-drivers"
+              className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-emerald-600 cursor-pointer"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <UserIcon className="h-4 w-4" />
+              Active Drivers
             </Link>
             <div className="border-t border-gray-200 my-2"></div>
             <Link

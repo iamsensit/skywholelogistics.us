@@ -4,13 +4,17 @@ import nodemailer from 'nodemailer';
 const createTransporter = () => {
   // For production, configure SMTP settings in .env.local
   if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    const port = parseInt(process.env.SMTP_PORT || '465');
     return nodemailer.createTransport({
       host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_PORT === '465',
+      port: port,
+      secure: port === 465, // SSL/TLS for port 465
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false, // Allow self-signed certificates
       },
     });
   }
@@ -120,6 +124,29 @@ export async function sendVerificationEmail(email: string, otpCode: string) {
   return sendEmail(
     email,
     'Email Verification - Driver App',
+    htmlContent,
+    textContent
+  );
+}
+
+export async function sendDriverEmail(email: string, subject: string, mcNo: string) {
+  // Subject will be the load details, and we'll include it in the email body
+  const htmlContent = `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+    <h2 style="color: #171717;">Good Morning</h2>
+    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <p style="color: #171717; font-size: 16px; margin: 0;"><strong>MC Number:</strong> ${mcNo}</p>
+    </div>
+    ${subject ? `<div style="margin-top: 20px;">
+      <p style="color: #171717; font-size: 14px; margin: 0;"><strong>Load Details:</strong> ${subject}</p>
+    </div>` : ''}
+  </div>`;
+  
+  const textContent = `Good Morning\n\nMC Number: ${mcNo}${subject ? `\n\nLoad Details: ${subject}` : ''}`;
+  
+  // Use the load details as the email subject
+  return sendEmail(
+    email,
+    subject || 'Driver Information',
     htmlContent,
     textContent
   );
