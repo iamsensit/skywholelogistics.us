@@ -130,23 +130,44 @@ export async function sendVerificationEmail(email: string, otpCode: string) {
 }
 
 export async function sendDriverEmail(email: string, subject: string, mcNo: string) {
-  // Subject will be the load details, and we'll include it in the email body
-  const htmlContent = `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-    <h2 style="color: #171717;">Good Morning</h2>
-    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-      <p style="color: #171717; font-size: 16px; margin: 0;"><strong>MC Number:</strong> ${mcNo}</p>
-    </div>
-    ${subject ? `<div style="margin-top: 20px;">
-      <p style="color: #171717; font-size: 14px; margin: 0;"><strong>Load Details:</strong> ${subject}</p>
-    </div>` : ''}
-  </div>`;
+  // Simple, clean email template matching the provided format
+  const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Load Inquiry</title>
+</head>
+<body style="margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background-color:#ffffff; color:#000000;">
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="padding:20px;">
+        ${subject ? `
+        <!-- Load Info (Big & Bold) -->
+        <p style="font-size:22px; font-weight:bold; margin-bottom:15px;">
+          ${subject}
+        </p>
+        ` : ''}
+        <p>
+          Good Morning!
+        </p>
+        <p>
+          MC: <strong>${mcNo}</strong>
+        </p>
+        <p>
+          <strong>Sky Whole Logistics</strong>
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
   
-  const textContent = `Good Morning\n\nMC Number: ${mcNo}${subject ? `\n\nLoad Details: ${subject}` : ''}`;
+  const textContent = `${subject ? `${subject}\n\n` : ''}Good Morning!\n\nMC: ${mcNo}\n\nSky Whole Logistics`;
   
   // Use the load details as the email subject
   return sendEmail(
     email,
-    subject || 'Driver Information',
+    subject || 'Load Inquiry',
     htmlContent,
     textContent
   );

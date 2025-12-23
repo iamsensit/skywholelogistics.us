@@ -35,10 +35,11 @@ export default function ActiveDriversPage() {
   const [emailSubject, setEmailSubject] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const [selectedDriverForEmail, setSelectedDriverForEmail] = useState<string | null>(null);
-  const [sendingEmail, setSendingEmail] = useState(false);
   const [updatingStatus, setUpdatingStatus] = useState(false);
   const [searchResults, setSearchResults] = useState<Driver[]>([]);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const loadDrivers = useCallback(async () => {
     try {
@@ -177,44 +178,55 @@ export default function ActiveDriversPage() {
     }
   };
 
-  const handleSendEmail = async (driverId: string, email: string) => {
-    if (!emailSubject.trim()) {
-      alert('Please enter an email subject');
+  const handleSendEmail = async (driverId: string, email: string, subject: string) => {
+    if (!subject.trim()) {
+      setToastMessage('Please enter load details');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
       return;
     }
 
     if (!email.trim()) {
-      alert('Please enter an email address');
+      setToastMessage('Please enter broker email address');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
       return;
     }
 
-    try {
-      setSendingEmail(true);
-      const res = await fetch('/api/drivers/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          driverId,
-          email: email.trim(),
-          subject: emailSubject.trim(),
-        }),
-      });
+    // Close modal immediately
+    const driverName = drivers.find((d) => d.id === driverId)?.name || 'Driver';
+    setEmailSubject('');
+    setEmailAddress('');
+    setSelectedDriverForEmail(null);
 
-      if (res.ok) {
-        alert('Email sent successfully!');
-        setEmailSubject('');
-        setEmailAddress('');
-        setSelectedDriverForEmail(null);
-      } else {
-        const error = await res.json();
-        alert(error.error || 'Failed to send email');
-      }
-    } catch (error) {
-      console.error('Error sending email:', error);
-      alert('Failed to send email');
-    } finally {
-      setSendingEmail(false);
-    }
+    // Send email in background
+    fetch('/api/drivers/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        driverId,
+        email: email.trim(),
+        subject: subject.trim(),
+      }),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          setToastMessage(`Email sent successfully to ${email.trim()}`);
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 4000);
+        } else {
+          const error = await res.json();
+          setToastMessage(`Failed: ${error.error || 'Unable to send email'}`);
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 4000);
+        }
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
+        setToastMessage(`Failed: Network error. Please try again.`);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+      });
   };
 
   const openEmailModal = (driver: Driver) => {
@@ -527,8 +539,8 @@ export default function ActiveDriversPage() {
 
       {/* Email Modal */}
       {selectedDriverForEmail && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white/95 backdrop-blur-md rounded-lg shadow-xl max-w-md w-full mx-4 p-6 border border-white/20">
+        <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50">
+          <div className="bg-white/95 backdrop-blur-lg rounded-xl shadow-2xl max-w-md w-full mx-4 p-6 border border-white/30">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Send Email to Driver</h3>
             <div className="space-y-4">
               <div>
@@ -570,13 +582,13 @@ export default function ActiveDriversPage() {
                   onClick={() => {
                     const driver = drivers.find((d) => d.id === selectedDriverForEmail);
                     if (driver) {
-                      handleSendEmail(driver.id, emailAddress);
+                      handleSendEmail(driver.id, emailAddress, emailSubject);
                     }
                   }}
-                  disabled={sendingEmail || !emailSubject.trim() || !emailAddress.trim()}
+                  disabled={!emailSubject.trim() || !emailAddress.trim()}
                   className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  {sendingEmail ? 'Sending...' : 'Send Email'}
+                  Send Email
                 </button>
                 <button
                   onClick={() => {
@@ -584,13 +596,34 @@ export default function ActiveDriversPage() {
                     setEmailSubject('');
                     setEmailAddress('');
                   }}
-                  disabled={sendingEmail}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-4 right-4 z-50 animate-in slide-in-from-bottom-5">
+          <div className={`${
+            toastMessage.includes('Failed') || toastMessage.includes('error') || toastMessage.includes('Please enter')
+              ? 'bg-red-600' 
+              : 'bg-emerald-600'
+          } text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 min-w-[300px]`}>
+            {toastMessage.includes('Failed') || toastMessage.includes('error') || toastMessage.includes('Please enter') ? (
+              <svg className="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+            <span className="font-medium">{toastMessage}</span>
           </div>
         </div>
       )}
