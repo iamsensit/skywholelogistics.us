@@ -14,6 +14,7 @@ import {
   ChevronDownIcon,
   UserIcon,
   PlusIcon,
+  EnvelopeIcon,
 } from '@heroicons/react/24/outline';
 
 export default function Navigation() {
@@ -51,7 +52,8 @@ export default function Navigation() {
                          pathname?.startsWith('/driver-form') ||
                          pathname?.startsWith('/loads') ||
                          pathname?.startsWith('/load-form') ||
-                         pathname?.startsWith('/active-drivers');
+                         pathname?.startsWith('/active-drivers') ||
+                         pathname?.startsWith('/sent-emails');
 
   // Show public navigation if not authenticated OR not on dashboard pages
   if (!isAuthenticated || !isDashboardPage) {
@@ -191,6 +193,16 @@ export default function Navigation() {
                       <UserIcon className="h-4 w-4" />
                       Active Drivers
                     </Link>
+                    <Link
+                      href="/sent-emails"
+                      onClick={() => setDropdownOpen(false)}
+                      className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50 cursor-pointer ${
+                        pathname === '/sent-emails' ? 'text-emerald-600 bg-emerald-50' : 'text-gray-700'
+                      }`}
+                    >
+                      <EnvelopeIcon className="h-4 w-4" />
+                      Sent Emails
+                    </Link>
                     <div className="border-t border-gray-200 my-1"></div>
                     <Link
                       href="/driver-form"
@@ -267,6 +279,14 @@ export default function Navigation() {
             >
               <UserIcon className="h-4 w-4" />
               Active Drivers
+            </Link>
+            <Link
+              href="/sent-emails"
+              className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-emerald-600 cursor-pointer"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <EnvelopeIcon className="h-4 w-4" />
+              Sent Emails
             </Link>
             <div className="border-t border-gray-200 my-2"></div>
             <Link

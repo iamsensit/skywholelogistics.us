@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Driver from '@/models/Driver';
+import Email from '@/models/Email';
 import { getSession } from '@/lib/getSession';
 import { sendDriverEmail } from '@/lib/email';
 import mongoose from 'mongoose';
@@ -47,12 +48,45 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email with MC number
-    await sendDriverEmail(email, subject, driver.mcNo);
+    try {
+      const result = await sendDriverEmail(email, subject, driver.mcNo);
 
-    return NextResponse.json({
-      success: true,
-      message: 'Email sent successfully',
-    });
+      // Save email record to database
+      const emailRecord = new Email({
+        userId,
+        driverId: driver._id,
+        driverName: driver.name,
+        driverMcNo: driver.mcNo,
+        toEmail: email,
+        subject: subject,
+        sentAt: new Date(),
+        status: 'sent',
+        messageId: result?.messageId || undefined,
+      });
+      await emailRecord.save();
+
+      return NextResponse.json({
+        success: true,
+        message: 'Email sent successfully',
+        emailId: emailRecord._id.toString(),
+      });
+    } catch (error: any) {
+      // Save failed email record
+      const emailRecord = new Email({
+        userId,
+        driverId: driver._id,
+        driverName: driver.name,
+        driverMcNo: driver.mcNo,
+        toEmail: email,
+        subject: subject,
+        sentAt: new Date(),
+        status: 'failed',
+        errorMessage: error.message || 'Failed to send email',
+      });
+      await emailRecord.save();
+
+      throw error;
+    }
   } catch (error: any) {
     console.error('Error sending email:', error);
     return NextResponse.json(

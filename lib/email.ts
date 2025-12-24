@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { saveToSentFolder } from './imap';
 
 // Create transporter (configure with your email service)
 const createTransporter = () => {
@@ -34,7 +35,16 @@ const createTransporter = () => {
   return null;
 };
 
-export async function sendEmail(email: string, subject: string, html: string, text: string) {
+export async function sendEmail(
+  email: string, 
+  subject: string, 
+  html: string, 
+  text: string,
+  options?: {
+    inReplyTo?: string;
+    references?: string;
+  }
+) {
   try {
     const transporter = createTransporter();
     
@@ -48,7 +58,7 @@ export async function sendEmail(email: string, subject: string, html: string, te
       return { success: true, messageId: 'dev-mode' };
     }
     
-    const mailOptions = {
+    const mailOptions: any = {
       from: process.env.FROM_EMAIL || 'noreply@driverapp.com',
       to: email,
       subject,
@@ -56,8 +66,90 @@ export async function sendEmail(email: string, subject: string, html: string, te
       text,
     };
 
+    // Add threading headers for replies
+    if (options?.inReplyTo) {
+      mailOptions.inReplyTo = options.inReplyTo;
+      mailOptions.references = options.references || options.inReplyTo;
+    }
+
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.messageId);
+    const messageId = info.messageId || `<${Date.now()}-${Math.random().toString(36).substring(7)}@skywholelogistics.us>`;
+    console.log('Email sent via SMTP:', messageId);
+    
+    // Save to IMAP Sent folder (some mail servers don't auto-save)
+    // We save manually to ensure emails appear in Sent folder
+    try {
+      // Construct RFC 2822 formatted email for IMAP
+      // Format date with proper timezone offset (RFC 2822 format)
+      // Use LOCAL time, not UTC, so it matches when the user actually sent it
+      const now = new Date();
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      // Get timezone offset in minutes and convert to +/-HHMM format
+      // getTimezoneOffset returns offset in minutes (negative for ahead of UTC, positive for behind)
+      const tzOffset = -now.getTimezoneOffset(); // Invert because we want the offset from UTC
+      const tzHours = Math.floor(Math.abs(tzOffset) / 60);
+      const tzMinutes = Math.abs(tzOffset) % 60;
+      const tzSign = tzOffset >= 0 ? '+' : '-';
+      const tzString = `${tzSign}${String(tzHours).padStart(2, '0')}${String(tzMinutes).padStart(2, '0')}`;
+      
+      // Use LOCAL date/time components
+      const dayName = days[now.getDay()];
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      // RFC 2822 format: "Wed, 24 Dec 2025 15:28:00 -0500" (with local timezone)
+      const dateHeader = `${dayName}, ${day} ${month} ${year} ${hours}:${minutes}:${seconds} ${tzString}`;
+      
+      // Encode subject if it contains non-ASCII characters
+      let subjectHeader = mailOptions.subject;
+      if (/[^\x00-\x7F]/.test(subjectHeader)) {
+        // Contains non-ASCII, encode as UTF-8
+        subjectHeader = `=?UTF-8?B?${Buffer.from(subjectHeader, 'utf8').toString('base64')}?=`;
+      }
+      
+      let emailContent = `From: ${mailOptions.from}\r\n` +
+        `To: ${mailOptions.to}\r\n` +
+        `Subject: ${subjectHeader}\r\n` +
+        `Date: ${dateHeader}\r\n` +
+        `Message-ID: ${messageId}\r\n` +
+        `X-Mailer: SkyWhole Logistics Driver App\r\n`;
+      
+      // Add threading headers for replies
+      if (mailOptions.inReplyTo) {
+        emailContent += `In-Reply-To: ${mailOptions.inReplyTo}\r\n`;
+      }
+      if (mailOptions.references) {
+        emailContent += `References: ${mailOptions.references}\r\n`;
+      }
+      
+      // Use base64 encoding for better compatibility
+      const htmlBuffer = Buffer.from(mailOptions.html, 'utf8');
+      const encodedHtml = htmlBuffer.toString('base64');
+      const wrappedHtml = encodedHtml.match(/.{1,76}/g)?.join('\r\n') || encodedHtml;
+      
+      emailContent += `MIME-Version: 1.0\r\n` +
+        `Content-Type: text/html; charset=utf-8\r\n` +
+        `Content-Transfer-Encoding: base64\r\n\r\n` +
+        wrappedHtml;
+      
+      console.log('📧 Saving email to Sent folder via IMAP...');
+      console.log(`Date header: ${dateHeader}`);
+      console.log(`Message-ID: ${messageId}`);
+      await saveToSentFolder(emailContent);
+      console.log('✅ Email save process completed (check logs above for success/failure)');
+    } catch (error: any) {
+      console.error('❌ Error saving to Sent folder (non-critical):', error);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+      // Don't throw - email was sent successfully, saving to sent folder is optional
+      // But log it so we know if there's an issue
+    }
     
     if (process.env.NODE_ENV === 'development' && info.messageId) {
       try {
@@ -70,7 +162,7 @@ export async function sendEmail(email: string, subject: string, html: string, te
       }
     }
     
-    return { success: true, messageId: info.messageId };
+    return { success: true, messageId: messageId };
   } catch (error: any) {
     console.error('Error sending email:', error);
     if (process.env.NODE_ENV === 'development') {
@@ -129,7 +221,15 @@ export async function sendVerificationEmail(email: string, otpCode: string) {
   );
 }
 
-export async function sendDriverEmail(email: string, subject: string, mcNo: string) {
+export async function sendDriverEmail(
+  email: string, 
+  subject: string, 
+  mcNo: string,
+  options?: {
+    inReplyTo?: string;
+    references?: string;
+  }
+) {
   // Simple, clean email template matching the provided format
   const htmlContent = `<!DOCTYPE html>
 <html>
@@ -169,7 +269,8 @@ export async function sendDriverEmail(email: string, subject: string, mcNo: stri
     email,
     subject || 'Load Inquiry',
     htmlContent,
-    textContent
+    textContent,
+    options || undefined
   );
 }
 
