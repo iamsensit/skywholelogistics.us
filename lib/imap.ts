@@ -83,7 +83,7 @@ export async function checkForReplies(): Promise<{ emails: ParsedMail[]; message
 
           fetch.on('message', (msg: any, seqno: number) => {
             msg.on('body', (stream: NodeJS.ReadableStream, info: any) => {
-              simpleParser(stream, (err: Error | null, parsed: ParsedMail) => {
+              simpleParser(stream as any, (err: Error | null, parsed: ParsedMail) => {
                 if (err) {
                   console.error('Error parsing email:', err);
                   processed++;

@@ -360,7 +360,7 @@ export default function SentEmailsPage() {
                 <span>Auto-check (1 min)</span>
               </label>
               <button
-                onClick={handleCheckReplies}
+                onClick={() => handleCheckReplies(false)}
                 disabled={checkingReplies}
                 className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
