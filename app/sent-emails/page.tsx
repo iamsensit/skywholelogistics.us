@@ -71,7 +71,7 @@ export default function SentEmailsPage() {
           if ('Notification' in window && Notification.permission === 'granted') {
             new Notification('New Email Reply - SkyWhole Logistics', {
               body: `Reply from ${data.driverName} (MC: ${data.driverMcNo})\n${data.subject}`,
-              icon: '/swl logo.png',
+              icon: '/logo.png',
               tag: `reply-${data.emailId}`,
             });
           }

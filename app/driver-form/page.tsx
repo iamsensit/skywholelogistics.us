@@ -256,7 +256,7 @@ function DriverFormContent() {
                     required
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Driver name"
                   />
                 </div>
@@ -270,7 +270,7 @@ function DriverFormContent() {
                     required
                     value={formData.mcNo}
                     onChange={(e) => handleInputChange('mcNo', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="MC Number"
                   />
                 </div>
@@ -284,7 +284,7 @@ function DriverFormContent() {
                     required
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Phone number"
                   />
                 </div>
@@ -297,7 +297,7 @@ function DriverFormContent() {
                     required
                     value={formData.truckType}
                     onChange={(e) => handleInputChange('truckType', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   >
                     <option value="">Select type</option>
                     {TRUCK_TYPES.map(type => (
@@ -329,7 +329,7 @@ function DriverFormContent() {
                       type="text"
                       value={formData.dimensions.height}
                       onChange={(e) => handleInputChange('dimensions.height', e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
                   <div>
@@ -338,7 +338,7 @@ function DriverFormContent() {
                       type="text"
                       value={formData.dimensions.long}
                       onChange={(e) => handleInputChange('dimensions.long', e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
                   <div>
@@ -347,7 +347,7 @@ function DriverFormContent() {
                       type="text"
                       value={formData.dimensions.wide}
                       onChange={(e) => handleInputChange('dimensions.wide', e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
                   <div>
@@ -356,7 +356,7 @@ function DriverFormContent() {
                       type="text"
                       value={formData.dimensions.doorClearance}
                       onChange={(e) => handleInputChange('dimensions.doorClearance', e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -462,7 +462,7 @@ function DriverFormContent() {
                     required
                     value={formData.rpm}
                     onChange={(e) => handleInputChange('rpm', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Rate per mile"
                   />
                 </div>
@@ -476,7 +476,7 @@ function DriverFormContent() {
                     required
                     value={formData.zipCode}
                     onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Zip code"
                   />
                 </div>
@@ -490,7 +490,7 @@ function DriverFormContent() {
                     required
                     value={formData.percentage}
                     onChange={(e) => handleInputChange('percentage', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Percentage"
                   />
                 </div>
@@ -510,7 +510,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.cdlNumber}
                     onChange={(e) => handleInputChange('cdlNumber', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="CDL Number"
                   />
                 </div>
@@ -523,7 +523,7 @@ function DriverFormContent() {
                     type="date"
                     value={formData.cdlExpiration}
                     onChange={(e) => handleInputChange('cdlExpiration', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
 
@@ -535,7 +535,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.cdlState}
                     onChange={(e) => handleInputChange('cdlState', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="State"
                   />
                 </div>
@@ -548,7 +548,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.licenseNumber}
                     onChange={(e) => handleInputChange('licenseNumber', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="License Number"
                   />
                 </div>
@@ -561,7 +561,7 @@ function DriverFormContent() {
                     type="date"
                     value={formData.licenseExpiration}
                     onChange={(e) => handleInputChange('licenseExpiration', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
 
@@ -573,7 +573,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.licenseState}
                     onChange={(e) => handleInputChange('licenseState', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="State"
                   />
                 </div>
@@ -593,7 +593,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.insuranceProvider}
                     onChange={(e) => handleInputChange('insuranceProvider', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Insurance Company"
                   />
                 </div>
@@ -606,7 +606,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.insurancePolicyNumber}
                     onChange={(e) => handleInputChange('insurancePolicyNumber', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Policy Number"
                   />
                 </div>
@@ -619,7 +619,7 @@ function DriverFormContent() {
                     type="date"
                     value={formData.insuranceExpiration}
                     onChange={(e) => handleInputChange('insuranceExpiration', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
 
@@ -631,7 +631,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.insuranceCoverage}
                     onChange={(e) => handleInputChange('insuranceCoverage', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="e.g., $1,000,000"
                   />
                 </div>
@@ -651,7 +651,7 @@ function DriverFormContent() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="driver@email.com"
                   />
                 </div>
@@ -664,7 +664,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.yearsOfExperience}
                     onChange={(e) => handleInputChange('yearsOfExperience', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="e.g., 5 years"
                   />
                 </div>
@@ -675,7 +675,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.address}
                     onChange={(e) => handleInputChange('address', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="Street address"
                   />
                 </div>
@@ -686,7 +686,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.city}
                     onChange={(e) => handleInputChange('city', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="City"
                   />
                 </div>
@@ -697,7 +697,7 @@ function DriverFormContent() {
                     type="text"
                     value={formData.state}
                     onChange={(e) => handleInputChange('state', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     placeholder="State"
                   />
                 </div>
@@ -715,7 +715,7 @@ function DriverFormContent() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                className="px-6 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
               >
                 {isSubmitting ? 'Saving...' : 'Save'}
               </button>

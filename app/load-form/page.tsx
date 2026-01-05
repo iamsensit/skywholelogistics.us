@@ -139,7 +139,7 @@ function LoadFormContent() {
                   required
                   value={formData.fromLocation}
                   onChange={(e) => handleInputChange('fromLocation', e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="Pickup location"
                 />
               </div>
@@ -153,7 +153,7 @@ function LoadFormContent() {
                   required
                   value={formData.toLocation}
                   onChange={(e) => handleInputChange('toLocation', e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="Delivery location"
                 />
               </div>
@@ -174,7 +174,7 @@ function LoadFormContent() {
                   required
                   value={formData.dimension}
                   onChange={(e) => handleInputChange('dimension', e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="e.g., 48x40x96"
                 />
               </div>
@@ -188,7 +188,7 @@ function LoadFormContent() {
                   required
                   value={formData.weight}
                   onChange={(e) => handleInputChange('weight', e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="e.g., 5000 lbs"
                 />
               </div>
@@ -202,7 +202,7 @@ function LoadFormContent() {
                   required
                   value={formData.rate}
                   onChange={(e) => handleInputChange('rate', e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="e.g., $1500"
                 />
               </div>
@@ -223,7 +223,7 @@ function LoadFormContent() {
                   required
                   value={formData.pickupTime}
                   onChange={(e) => handleInputChange('pickupTime', e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
 
@@ -236,7 +236,7 @@ function LoadFormContent() {
                   required
                   value={formData.dropOffTime}
                   onChange={(e) => handleInputChange('dropOffTime', e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
             </div>
@@ -253,7 +253,7 @@ function LoadFormContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+              className="px-6 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
             >
               {isSubmitting ? 'Saving...' : 'Save'}
             </button>

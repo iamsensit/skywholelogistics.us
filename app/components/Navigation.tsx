@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
+import Image from 'next/image';
 import {
   TruckIcon,
   Bars3Icon,
@@ -59,24 +60,31 @@ export default function Navigation() {
   if (!isAuthenticated || !isDashboardPage) {
     return (
       <header 
-        className={`bg-white sticky top-0 left-0 w-full z-40 transition-shadow duration-300 border-b border-gray-100 ${
+        className={`bg-white transition-shadow duration-300 border-b border-gray-100 ${
           headerShadow ? 'shadow-sm' : ''
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-xl font-semibold text-gray-900 cursor-pointer flex items-center gap-2.5">
-              <TruckIcon className="h-6 w-6 text-emerald-600" />
-              <span className="tracking-tight">SkyWhole Logistics</span>
+            <Link href="/" className="text-lg sm:text-xl font-semibold text-gray-900 cursor-pointer flex items-center gap-2">
+              <Image src="/logo.png" alt="SkyWhole Logistics" width={32} height={32} className="h-6 w-6 sm:h-8 sm:w-8 object-contain" />
+              <span className="tracking-tight hidden sm:inline">SkyWhole Logistics</span>
+              <span className="tracking-tight sm:hidden">SWL</span>
             </Link>
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
               <div className="flex items-center gap-6 ml-4 pl-6 border-l border-gray-200">
                 <a 
-                  href="tel:+12013660319" 
-                  className="text-sm text-gray-600 hover:text-emerald-600 transition-colors cursor-pointer flex items-center gap-1.5"
+                  href="tel:+12014747860" 
+                  className="text-sm text-gray-600 hover:text-emerald-600 transition-colors cursor-pointer flex items-center gap-1.5 group relative"
                 >
-                  <PhoneIcon className="h-4 w-4" />
-                  <span className="font-medium">+1 (201) 366-0319</span>
+                  <div className="relative flex items-center justify-center">
+                    <PhoneIcon className="h-4 w-4 relative z-10 phone-ring transition-all" />
+                    <span className="absolute inset-0 flex items-center justify-center">
+                      <span className="absolute inline-flex h-5 w-5 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-75 group-hover:animate-ping"></span>
+                      <span className="absolute inline-flex h-5 w-5 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-50 group-hover:animate-ping" style={{ animationDelay: '0.2s' }}></span>
+                    </span>
+                  </div>
+                  <span className="font-medium">(201) 474-7860</span>
                 </a>
                 {isAuthenticated && (
                   <div className="flex items-center gap-3">
@@ -111,6 +119,19 @@ export default function Navigation() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-200 bg-white">
            <div className="px-4 py-4 space-y-3">
+               <a 
+                 href="tel:+12014747860" 
+                 className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors group relative"
+               >
+                 <div className="relative flex items-center justify-center">
+                   <PhoneIcon className="h-4 w-4 relative z-10 phone-ring transition-all" />
+                   <span className="absolute inset-0 flex items-center justify-center">
+                     <span className="absolute inline-flex h-5 w-5 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-75 group-hover:animate-ping"></span>
+                     <span className="absolute inline-flex h-5 w-5 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-50 group-hover:animate-ping" style={{ animationDelay: '0.2s' }}></span>
+                   </span>
+                 </div>
+                 <span>(201) 474-7860</span>
+               </a>
                {isAuthenticated ? (
                  <>
                    <Link
@@ -141,14 +162,14 @@ export default function Navigation() {
   // Dashboard navigation
   return (
     <header 
-      className={`bg-white sticky top-0 left-0 w-full z-40 transition-shadow duration-300 border-b border-gray-100 ${
+      className={`bg-white transition-shadow duration-300 border-b border-gray-100 ${
         headerShadow ? 'shadow-sm' : ''
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="text-xl font-semibold text-gray-900 cursor-pointer flex items-center gap-2.5">
-            <TruckIcon className="h-6 w-6 text-emerald-600" />
+            <Image src="/logo.png" alt="SkyWhole Logistics" width={32} height={32} className="h-8 w-8 object-contain" />
             <span className="tracking-tight">SkyWhole Logistics</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
